@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style type="text/css">
+        .title {
+            text-align: center;
+            margin-top: 100px;
+        }
+        .whole-form {
+            display: flex;
+            align-self: center;
+            margin-top: 50px;
+            margin-left: 450px;
+            gap: 10px;
+        }
+        .form-group {
+            display: block;
+            margin-bottom: 10px;
+            margin-left: 200px;
+        }
+        .return-btn {
+            margin-left: 650px;
+        }
+        input[type=text], input[type=textarea], textarea, select {
+            display: block;
+            width: 500px;
+        }
+        .button {
+            width: 500px;
+        }
+        button {
+            padding: 5px;
+            margin: 10px 10px 10px 20px;
+            flex-direction: column;
+            flex: 1;
+        }
+    </style>
+    <meta charset="ISO-8859-1">
+    <title>Appointment Platform</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="title">
+    <h1>Appointment Platform</h1>
+</div>
+
+
+<div class="whole-form" >
+
+    <form method="post" th:object="${person}">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="msp">MSP No:</label>
+            <input type="text" id="msp" name="msp" />
+        </div>
+
+        <div class="form-group">
+            <label for="birth">Date of birth:</label>
+            <input type="date" th:style="'in'" th:field="*{birth}" id="birth" required/>
+        </div>
+
+
+        <div class="form-group">
+            <label for="desc">Description:</label>
+            <textarea id="desc" name="description" rows="5" cols="25"></textarea>
+        </div>
+        <br/>
+
+        <div class="form-group">
+            <label for="pri">Prioritized:</label>
+            <select id="pri" name="isPrioritized">
+                <option value="false">N</option>
+                <option value="true">Y</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="button" value="Submit" formaction="/booking/success"/>
+        </div>
+    </form>
+
+</div>
+<form class="return-btn" action="/appointment/waitingList" method="get">
+    <input type="submit" class="button" value="Return"/>
+</form>
+
+</body>
+</html>

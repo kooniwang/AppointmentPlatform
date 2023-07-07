@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'error')}">
+
+  <body>
+    <h2 style="text-align: center">Something Wrong...We're working on it</h2>
+    <img src="../static/resources/images/error.jpg" style="width: 900px; height: 600px; margin-left: 200px" th:src="@{/resources/images/error.jpg}"/>
+
+    <p th:text="${message}">Exception message</p>
+  </body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'waitingList')}">
+<head>
+    <style>
+        .red-row td {
+            color: red;
+        }
+    </style>
+</head>
+
+
+<body>
+
+<h2>Waiting List</h2>
+
+<form method="post">
+<table id="waitingList" class="table table-striped">
+    <thead>
+    <tr>
+        <th>Order</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>MSP</th>
+        <th>Description</th>
+        <th>Emergency</th>
+        <th>Management</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="person, status : ${records}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${person.firstName + ' ' + person.lastName}" th:style="${person.isPrioritized ? 'color: red' : ''}"></td>
+        <td th:text="${person.birth}" th:style="${person.isPrioritized ? 'color: red' : ''}"></td>
+        <td th:text="${person.msp}" th:style="${person.isPrioritized ? 'color: red' : ''}"></td>
+        <td th:text="${person.description}" th:style="${person.isPrioritized ? 'color: red' : ''}"></td>
+        <td th:text="${person.isPrioritized} ? 'Y' : 'N'" th:style="${person.isPrioritized ? 'color: red' : ''}"></td>
+        <td>
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" name="id" th:value="${person.id}" formaction="/appointment/cancel">Cancel</button>
+                <button type="submit" name="id" th:value="${person.id}" formaction="/appointment/prioritize">Prioritize</button>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+    <p th:if="${records == null or #lists.isEmpty(records)}">No one is waiting now</p>
+
+    </tbody>
+</table>
+</form>
+
+</body>
+</html>
