@@ -2,10 +2,6 @@ package com.example.appointmentplatform.service;
 
 import com.example.appointmentplatform.model.Person;
 import com.example.appointmentplatform.utils.DoublyLinkedList;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +14,8 @@ import java.util.UUID;
 @Service
 public class BookingService {
 
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    private DoublyLinkedList<Person> normalQueue = new DoublyLinkedList<Person>();
-    private DoublyLinkedList<Person> priorityQueue = new DoublyLinkedList<Person>();
+    private DoublyLinkedList<Person> normalQueue = new DoublyLinkedList<>();
+    private DoublyLinkedList<Person> priorityQueue = new DoublyLinkedList<>();
 
 
     @PostConstruct
@@ -88,8 +82,7 @@ public class BookingService {
     }
 
 
-    public ArrayList<Person> getWaitingList() throws JsonProcessingException {
-        String array2Json = "";
+    public ArrayList<Person> getWaitingList(){
         ArrayList<Person> appointmentList = new ArrayList<>();
         if(priorityQueue != null){
             DoublyLinkedList.Node node = priorityQueue.getHead();
@@ -107,12 +100,6 @@ public class BookingService {
             }
 
         }
-
-        if(appointmentList.size() > 0){
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-            array2Json = objectMapper.writeValueAsString(appointmentList);
-        }
         return appointmentList;
     }
 
@@ -120,8 +107,6 @@ public class BookingService {
     public void cancelAppointment(UUID id){
         if(priorityQueue.contains(id)) priorityQueue.delete(id);
         else normalQueue.delete(id);
-        System.out.println("priority queue: " + priorityQueue.toString() + "\n" + "normal queue: " + normalQueue.toString());
-        System.out.println("priority map: " + priorityQueue.getMap().keySet() + "\n" + "normal map: " + normalQueue.getMap().keySet());
 
         //update person's status as CANCEL DB based on id
     }
@@ -134,10 +119,8 @@ public class BookingService {
         Person person = normalQueue.getMap().get(id).getVal();
         person.setStatus(Person.Status.PRIORITIZED);
         person.setIsPrioritized(true);
-        normalQueue.delete(person.getId());
         priorityQueue.add(new DoublyLinkedList.Node(person));
-        System.out.println("priority queue: " + priorityQueue.toString() + "\n" + "normal queue: " + normalQueue.toString());
-        System.out.println("priority map: " + priorityQueue.getMap().keySet() + "\n" + "normal map: " + normalQueue.getMap().keySet());
+        normalQueue.delete(person.getId());
 
         //update person's status as PRIORITIZED DB based on id
     }
@@ -150,8 +133,6 @@ public class BookingService {
         person.setStatus(Person.Status.WAITING);
         if(person.getIsPrioritized()) priorityQueue.add(new DoublyLinkedList.Node(person));
         else normalQueue.add(new DoublyLinkedList.Node(person));
-        System.out.println("priority queue: " + priorityQueue.toString() + "\n" + "normal queue: " + normalQueue.toString());
-        System.out.println("priority map: " + priorityQueue.getMap().keySet() + "\n" + "normal map: " + normalQueue.getMap().keySet());
 
         //insert into DB the person's info
     }

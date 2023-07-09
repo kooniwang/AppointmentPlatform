@@ -10,11 +10,48 @@ import java.util.UUID;
 @Component
 public class DoublyLinkedList<E>{
 
-    private HashMap<UUID, Node> map = new HashMap<UUID, Node>();
+    private HashMap<UUID, Node> map = new HashMap<>();
     Node head, last;
 
     int size = 0;
 
+    public static class Node {
+
+        private Person val;
+        private Node prev;
+        private Node next;
+
+        public Node(Person person){
+            this.val = person;
+        }
+
+
+        public Person getVal() {
+            return val;
+        }
+
+        public void setVal(Person val) {
+            this.val = val;
+        }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
+
+    }
     public DoublyLinkedList(){}
 
     public boolean isEmpty(){
@@ -109,42 +146,6 @@ public class DoublyLinkedList<E>{
     }
 
 
-    public static class Node {
 
-        private Person val;
-        private Node prev;
-        private Node next;
-
-        public Node(Person person){
-            this.val = person;
-        }
-
-
-        public Person getVal() {
-            return val;
-        }
-
-        public void setVal(Person val) {
-            this.val = val;
-        }
-
-        public Node getPrev() {
-            return prev;
-        }
-
-        public void setPrev(Node prev) {
-            this.prev = prev;
-        }
-
-        public Node getNext() {
-            return next;
-        }
-
-        public void setNext(Node next) {
-            this.next = next;
-        }
-
-
-    }
 
 }

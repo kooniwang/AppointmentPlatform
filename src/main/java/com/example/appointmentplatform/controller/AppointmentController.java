@@ -2,7 +2,6 @@ package com.example.appointmentplatform.controller;
 
 import com.example.appointmentplatform.model.Person;
 import com.example.appointmentplatform.service.BookingService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,14 +25,14 @@ public class AppointmentController {
 
 
     @GetMapping(value ="/waitingList")
-    public String getAppointmentList(Model model) throws JsonProcessingException {
+    public String getAppointmentList(Model model) {
         ArrayList<Person> records = bookingService.getWaitingList();
         model.addAttribute("records", records);
         return "waitingList";
     }
 
     @PostMapping(value ="/cancel")
-    public String cancelAppointment(Model model, @RequestParam("id")UUID id) throws JsonProcessingException {
+    public String cancelAppointment(Model model, @RequestParam("id")UUID id) {
         bookingService.cancelAppointment(id);
         ArrayList<Person> records = bookingService.getWaitingList();
         model.addAttribute("records", records);
@@ -41,7 +40,7 @@ public class AppointmentController {
     }
 
     @PostMapping(value = "/prioritize")
-    public String prioritizeAppointment(Model model, @RequestParam("id")UUID id) throws JsonProcessingException {
+    public String prioritizeAppointment(Model model, @RequestParam("id")UUID id) {
         bookingService.prioritizeAppointment(id);
         ArrayList<Person> records = bookingService.getWaitingList();
         model.addAttribute("records", records);
