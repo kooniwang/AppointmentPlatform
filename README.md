@@ -16,3 +16,7 @@ Currently, **DoublyLinkedList** and **HashMap** are used to better perform inser
 (2) Cancel the appointment on the waiting list.
 
 (3) Priority the patients with a high level of emergency.
+
+
+https://github.com/kooniwang/AppointmentPlatform/assets/17063525/442f59d1-637a-41a1-8e0a-012893e8ab36
+
